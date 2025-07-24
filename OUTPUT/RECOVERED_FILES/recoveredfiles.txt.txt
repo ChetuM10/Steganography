@@ -1,0 +1,58 @@
+The **brute force approach** simulates the toggling of bulbs round by round, just as described in the problem statement.  
+
+---
+
+### **Brute Force Approach Explanation**
+1. **Create a boolean array `bulbs[]`** of size `n`, initialized to `false` (representing "OFF").
+2. **Simulate toggling** for each round `i = 1 to n`:
+   - Toggle every `i-th` bulb.
+   - If `bulbs[j]` is `true`, turn it `false`, and vice versa.
+3. **Count the bulbs that are still `ON` (`true`)** after all rounds.
+
+---
+
+### **Brute Force Code (O(n²) Complexity)**
+```java
+class Solution {
+    public int bulbSwitch(int n) {
+        boolean[] bulbs = new boolean[n]; // Default is false (OFF)
+        
+        for (int i = 1; i <= n; i++) { // Each round
+            for (int j = i - 1; j < n; j += i) { // Toggle every i-th bulb
+                bulbs[j] = !bulbs[j];
+            }
+        }
+        
+        // Count bulbs that are ON (true)
+        int count = 0;
+        for (boolean bulb : bulbs) {
+            if (bulb) count++;
+        }
+        return count;
+    }
+}
+```
+
+✅ **Time Complexity:** **O(n²)** (nested loops)  
+✅ **Space Complexity:** **O(n)** (for `bulbs[]` array)
+
+---
+
+### **Example Walkthrough**
+#### **For `n = 5`:**
+| Bulb # | Initial | Round 1 | Round 2 | Round 3 | Round 4 | Round 5 |
+|--------|---------|---------|---------|---------|---------|---------|
+| 1      | OFF     | ON      | ON      | ON      | ON      | OFF     |
+| 2      | OFF     | ON      | OFF     | OFF     | OFF     | OFF     |
+| 3      | OFF     | ON      | ON      | OFF     | OFF     | OFF     |
+| 4      | OFF     | ON      | OFF     | OFF     | ON      | ON      |
+| 5      | OFF     | ON      | ON      | ON      | ON      | OFF     |
+**Result:** **2 bulbs remain ON (bulb 1 and 4).**
+
+---
+
+### **Why is This Inefficient?**
+- Each bulb is toggled multiple times, leading to **O(n²) complexity**.
+- **Mathematical optimization** (`sqrt(n)`) is much faster.
+
+Would you like to see a **slightly optimized version**? 🚀
